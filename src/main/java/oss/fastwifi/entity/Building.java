@@ -15,4 +15,5 @@ public class Building {
     @GeneratedValue
     Long id;
     String name;
+    Integer floor;
 }

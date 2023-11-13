@@ -9,13 +9,12 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-public class WifiInfo {
+public class Wifi {
 
     @Id
     @GeneratedValue
     @Column
     private Long id;
-    private Integer floor;
     private Integer downloadSpeed;
     private Integer uploadSpeed;
     private LocalDate lastUpdate;
