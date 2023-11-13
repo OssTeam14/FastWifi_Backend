@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface WifiRepository extends JpaRepository<Wifi, Long> {
     Optional<Wifi> findById(Long id);
     List<Wifi> findByBuilding_NameAndBuilding_Floor(String name, Integer floor);
+    Wifi save(Wifi wifi);
+
 }
