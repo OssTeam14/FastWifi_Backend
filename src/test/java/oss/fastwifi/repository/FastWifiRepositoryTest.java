@@ -15,6 +15,8 @@ import oss.fastwifi.entity.Wifi;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -41,7 +43,7 @@ class FastWifiRepositoryTest {
         Wifi save = fastWifiRepository.save(wifi);
 
         //Then
-        Assertions.assertThat(save).isEqualTo(wifi);
+        assertThat(save).isEqualTo(wifi);
 
 
     }
@@ -49,20 +51,21 @@ class FastWifiRepositoryTest {
     @Test
     public void 건물이름과층으로조회(){
         //Given
-        List<Building> 새빛관 = buildingRepository.findByName("새빛관");
-        for (Building build : 새빛관) {
-            for (int i = 0; i < 10; i++) {
-                Wifi wifi = Wifi.builder()
-                        .name("새빛1")
-                        .downloadSpeed(100)
-                        .uploadSpeed(10)
-                        .building(build)
-                        .build();
-            }
+        Building sebit = buildingRepository.findByNameAndFloor("새빛관",1).get();
+        for (int i = 0; i < 10; i++) {
+            Wifi wifi = Wifi.builder()
+                    .name("새빛" + i)
+                    .downloadSpeed(100)
+                    .uploadSpeed(10)
+                    .building(sebit)
+                    .build();
+            fastWifiRepository.save(wifi);
         }
 
+        //when
+        List<Wifi> wifis = fastWifiRepository.findByBuilding(sebit);
 
-
+        assertThat(wifis.size()).isEqualTo(10);
 
 
     }
