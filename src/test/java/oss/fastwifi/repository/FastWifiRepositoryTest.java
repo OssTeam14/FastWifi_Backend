@@ -1,9 +1,12 @@
 package oss.fastwifi.repository;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import oss.fastwifi.entity.Building;
@@ -14,6 +17,7 @@ import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class FastWifiRepositoryTest {
 
     @Autowired
@@ -22,13 +26,44 @@ class FastWifiRepositoryTest {
     BuildingRepository buildingRepository;
 
     @Test
+    @DisplayName("저장")
+    public void save(){
+        //Given
+        Building sebit = buildingRepository.findByNameAndFloor("새빛관", 1).get();
+        Wifi wifi = Wifi.builder()
+                .name("새빛1")
+                .downloadSpeed(100)
+                .uploadSpeed(10)
+                .building(sebit)
+                .build();
+
+        //When
+        Wifi save = fastWifiRepository.save(wifi);
+
+        //Then
+        Assertions.assertThat(save).isEqualTo(wifi);
+
+
+    }
+
+    @Test
     public void 건물이름과층으로조회(){
         //Given
-        List<Building> sebitList = buildingRepository.findByName("새빛관");
-        List<Building> chambitList = buildingRepository.findByName("참빛관");
+        List<Building> 새빛관 = buildingRepository.findByName("새빛관");
+        for (Building build : 새빛관) {
+            for (int i = 0; i < 10; i++) {
+                Wifi wifi = Wifi.builder()
+                        .name("새빛1")
+                        .downloadSpeed(100)
+                        .uploadSpeed(10)
+                        .building(build)
+                        .build();
+            }
+        }
 
 
-        Wifi wifi = new Wifi();
+
+
 
     }
 
