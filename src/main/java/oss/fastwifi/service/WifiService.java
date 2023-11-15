@@ -2,27 +2,48 @@ package oss.fastwifi.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import oss.fastwifi.FastwifiApplication;
-import oss.fastwifi.entity.Building;
-import oss.fastwifi.entity.Wifi;
-import oss.fastwifi.repository.BuildingRepository;
+import oss.fastwifi.dto.WifiMapper;
+import oss.fastwifi.dto.response.WifiForListDTO;
+import oss.fastwifi.dto.response.WifiWithPwdDTO;
+import oss.fastwifi.dto.response.WifiWithoutPwdDTO;
 import oss.fastwifi.repository.WifiRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WifiService {
-
-    private final BuildingRepository buildingRepository;
     private final WifiRepository wifiRepository;
+    private final WifiMapper wifiMapper;
 
-    public List<Wifi> getWifiList(String building, int floor){
-        Building findBuilding = buildingRepository.findByNameAndFloor(building, floor).get();
-        return  wifiRepository.findByBuilding(findBuilding);
+    public List<WifiForListDTO> getWifiListWithoutPwd(String building, int floor){
+        List<WifiForListDTO> wifiList = wifiRepository.findAllByBuilding_NameAndBuilding_Floor(building, floor)
+                .stream()
+                .map(wifiMapper::toWifiForListDto)
+                .collect(Collectors.toList());
+
+        return wifiList;
+    }
+
+    public WifiWithPwdDTO getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
+
+        return wifiMapper.toWifiWithPwdDto(
+                wifiRepository
+                        .findByBuilding_NameAndBuilding_FloorAndAndName(buildingName, floor, wifiName)
+                        .orElse(null)
+        );
+    }
+
+    public WifiWithoutPwdDTO getWifiInfoWithoutPwd(String buildingName, int floor, String wifiName){
+
+        return wifiMapper.toWifiWithoutPwdDto(
+                wifiRepository
+                        .findByBuilding_NameAndBuilding_FloorAndAndName(buildingName, floor, wifiName)
+                        .orElse(null)
+        );
     }
 
 }
