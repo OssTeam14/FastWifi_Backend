@@ -1,4 +1,4 @@
-package oss.response;
+package oss.fastwifi.response;
 
 public enum StatusEnum {
     OK(200, "OK"),
