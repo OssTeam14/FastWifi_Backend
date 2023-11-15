@@ -2,7 +2,7 @@ package oss.fastwifi.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import oss.fastwifi.dto.entity.Wifi;
+import oss.fastwifi.entity.Wifi;
 import oss.fastwifi.dto.enums.WifiSpeed;
 import oss.fastwifi.dto.response.WifiForListDTO;
 import oss.fastwifi.dto.response.WifiWithPwdDTO;

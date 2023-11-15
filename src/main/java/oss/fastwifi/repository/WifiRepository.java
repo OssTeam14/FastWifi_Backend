@@ -2,8 +2,8 @@ package oss.fastwifi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import oss.fastwifi.dto.entity.Building;
-import oss.fastwifi.dto.entity.Wifi;
+import oss.fastwifi.entity.Building;
+import oss.fastwifi.entity.Wifi;
 
 import java.util.List;
 import java.util.Optional;

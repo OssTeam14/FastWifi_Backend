@@ -3,7 +3,7 @@ package oss.fastwifi.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import oss.fastwifi.dto.entity.Building;
+import oss.fastwifi.entity.Building;
 
 import java.time.LocalDate;
 

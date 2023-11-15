@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import oss.fastwifi.dto.entity.Building;
-import oss.fastwifi.dto.entity.Wifi;
+import oss.fastwifi.entity.Building;
+import oss.fastwifi.entity.Wifi;
 
 import java.util.List;
 import java.util.Optional;

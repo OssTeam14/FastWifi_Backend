@@ -1,4 +1,4 @@
-package oss.fastwifi.dto.entity;
+package oss.fastwifi.entity;
 
 import lombok.Builder;
 import lombok.Getter;
