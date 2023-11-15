@@ -1,12 +1,12 @@
-package oss.fastwifi.dto;
+package oss.fastwifi.wifi.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import oss.fastwifi.entity.Wifi;
-import oss.fastwifi.dto.enums.WifiSpeed;
-import oss.fastwifi.dto.response.WifiForListDTO;
-import oss.fastwifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.entity.Wifi;
+import oss.fastwifi.wifi.dto.enums.WifiSpeed;
+import oss.fastwifi.wifi.dto.response.WifiForListDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
 
 @Mapper(componentModel = "spring")
 public interface WifiMapper {

@@ -1,4 +1,4 @@
-package oss.fastwifi.response;
+package oss.fastwifi.wifi.response;
 
 import lombok.Builder;
 import lombok.Data;

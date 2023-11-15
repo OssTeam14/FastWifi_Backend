@@ -1,4 +1,4 @@
-package oss.fastwifi.controller;
+package oss.fastwifi.wifi.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import oss.fastwifi.dto.response.WifiForListDTO;
-import oss.fastwifi.dto.response.WifiWithoutPwdDTO;
-import oss.fastwifi.response.Response;
-import oss.fastwifi.response.StatusEnum;
-import oss.fastwifi.service.WifiService;
+import oss.fastwifi.wifi.dto.response.WifiForListDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.response.Response;
+import oss.fastwifi.wifi.response.StatusEnum;
+import oss.fastwifi.wifi.service.WifiService;
 
 import java.util.List;
 

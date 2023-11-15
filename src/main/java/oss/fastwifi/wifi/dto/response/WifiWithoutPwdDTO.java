@@ -1,9 +1,9 @@
-package oss.fastwifi.dto.response;
+package oss.fastwifi.wifi.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import oss.fastwifi.entity.Building;
+import oss.fastwifi.wifi.entity.Building;
 
 import java.time.LocalDate;
 

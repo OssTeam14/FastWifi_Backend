@@ -1,4 +1,4 @@
-package oss.fastwifi.entity;
+package oss.fastwifi.wifi.entity;
 
 import lombok.Builder;
 import lombok.Getter;

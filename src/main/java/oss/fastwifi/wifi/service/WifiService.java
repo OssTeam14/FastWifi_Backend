@@ -1,13 +1,13 @@
-package oss.fastwifi.service;
+package oss.fastwifi.wifi.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import oss.fastwifi.dto.WifiMapper;
-import oss.fastwifi.dto.response.WifiForListDTO;
-import oss.fastwifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.dto.response.WifiWithoutPwdDTO;
-import oss.fastwifi.repository.WifiRepository;
+import oss.fastwifi.wifi.dto.WifiMapper;
+import oss.fastwifi.wifi.dto.response.WifiForListDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.repository.WifiRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

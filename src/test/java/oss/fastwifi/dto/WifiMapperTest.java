@@ -3,9 +3,10 @@ package oss.fastwifi.dto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import oss.fastwifi.entity.Wifi;
-import oss.fastwifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.dto.WifiMapper;
+import oss.fastwifi.wifi.entity.Wifi;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
 
 
 public class WifiMapperTest {

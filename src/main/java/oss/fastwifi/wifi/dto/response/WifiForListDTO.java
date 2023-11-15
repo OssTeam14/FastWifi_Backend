@@ -1,9 +1,9 @@
-package oss.fastwifi.dto.response;
+package oss.fastwifi.wifi.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import oss.fastwifi.dto.enums.WifiSpeed;
+import oss.fastwifi.wifi.dto.enums.WifiSpeed;
 
 @Getter
 @Setter
