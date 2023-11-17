@@ -2,19 +2,19 @@ package oss.fastwifi.wifi.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import oss.fastwifi.wifi.dto.response.WifiForListRes;
 import oss.fastwifi.wifi.entity.Wifi;
 import oss.fastwifi.wifi.dto.enums.WifiSpeed;
-import oss.fastwifi.wifi.dto.response.WifiForListDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdRes;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdRes;
 
 @Mapper(componentModel = "spring")
 public interface WifiMapper {
-    WifiWithoutPwdDTO toWifiWithoutPwdDto(Wifi wifi);
-    WifiWithPwdDTO toWifiWithPwdDto(Wifi wifi);
+    WifiWithoutPwdRes toWifiWithoutPwdDto(Wifi wifi);
+    WifiWithPwdRes toWifiWithPwdDto(Wifi wifi);
 
     @Mapping(source = "downloadSpeed", target = "speed")
-    WifiForListDTO toWifiForListDto(Wifi wifi);
+    WifiForListRes toWifiForListDto(Wifi wifi);
 
     default WifiSpeed toWifiSpeed(int speed) {
         if(speed < 100){

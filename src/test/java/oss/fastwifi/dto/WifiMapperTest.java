@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import oss.fastwifi.wifi.dto.WifiMapper;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdRes;
 import oss.fastwifi.wifi.entity.Wifi;
-import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdRes;
 
 
 public class WifiMapperTest {
@@ -24,7 +24,7 @@ public class WifiMapperTest {
                 .build();
 
         //when
-        WifiWithPwdDTO resultWithPwd = wifiMapper.toWifiWithPwdDto(sampleWifi);
+        WifiWithPwdRes resultWithPwd = wifiMapper.toWifiWithPwdDto(sampleWifi);
 
         //then
         Assertions.assertThat(resultWithPwd.getName()).isEqualTo(sampleWifi.getName());
@@ -45,7 +45,7 @@ public class WifiMapperTest {
                 .build();
 
         //when
-        WifiWithoutPwdDTO resultWithOutPwd = wifiMapper.toWifiWithoutPwdDto(sampleWifi);
+        WifiWithoutPwdRes resultWithOutPwd = wifiMapper.toWifiWithoutPwdDto(sampleWifi);
 
         //then
         Assertions.assertThat(resultWithOutPwd.getName()).isEqualTo(sampleWifi.getName());
