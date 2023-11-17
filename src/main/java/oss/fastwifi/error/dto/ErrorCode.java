@@ -41,13 +41,14 @@ public enum ErrorCode {
 
     EXPIRED_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, "V-002", "인증번호 유효시간이 지났습니다. 하단의 버튼을 눌러 재전송해 주세요."),
 
-    UNEXISTING_USER(HttpStatus.BAD_REQUEST, "V-003", "해당 이름과 전화번호를 가진 유저는 존재하지 않습니다."),
+    UNEXISTING_USER(HttpStatus.BAD_REQUEST, "V-003", "해당 이름과 이메일을 가진 유저는 존재하지 않습니다."),
 
-    NEED_VERIFICATION(HttpStatus.BAD_REQUEST, "V-004", "전화번호 인증이 사전 수행되어야 합니다."),
+    NEED_VERIFICATION(HttpStatus.BAD_REQUEST, "V-004", "이메일 인증이 사전 수행되어야 합니다."),
 
     UNEXISTING_ID(HttpStatus.BAD_REQUEST, "V-005", "해당 아이디의 유저는 존재하지 않습니다."),
 
-    UNMATCHING_PHONE_NUM(HttpStatus.BAD_REQUEST, "V-006", "회원정보에 등록된 전화번호와 일치하지 않습니다."),
+    UNMATCHING_PHONE_NUM(HttpStatus.BAD_REQUEST, "V-006", "회원정보에 등록된 이메일과 일치하지 않습니다."),
+
     UNABLE_TO_SEND_EMAIL(HttpStatus.BAD_REQUEST, "V-007", "메일을 보낼 수 없습니다.");
 
     private final HttpStatus status;

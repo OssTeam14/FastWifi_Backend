@@ -21,7 +21,7 @@ public class SignUpReq {
     private String password;
 
     @NotBlank
-    @Pattern(regexp = PHONE_NUM_REGEXP, message = "휴대폰 번호는 10~11자리의 숫자로만 입력 가능합니다.")
+    @Pattern(regexp = MAIL_REGEXP, message = "유효하지 않은 메일 주소입니다.")
     private String phoneNum;
 
     @NotBlank(message = "이름을 입력해주세요.")

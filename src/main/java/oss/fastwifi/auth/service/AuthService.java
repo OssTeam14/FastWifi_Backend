@@ -15,8 +15,8 @@ import oss.fastwifi.user.entity.User;
 import oss.fastwifi.user.repository.UserRepository;
 import oss.fastwifi.verification.dto.VerifyingType;
 import oss.fastwifi.verification.service.VerificationService;
-import oss.jwt.JwtTokenProvider;
-import oss.jwt.RefreshToken;
+import oss.fastwifi.jwt.JwtTokenProvider;
+import oss.fastwifi.jwt.RefreshToken;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +42,7 @@ public class AuthService {
         userRepository.save(User.builder()
                 .uid(signUpReq.getUid())
                 .password(passwordEncoder.encode(signUpReq.getPassword()))
-                .phoneNum(signUpReq.getPhoneNum())
+                .email(signUpReq.getPhoneNum())
                 .name(signUpReq.getName())
                 .build());
     }
@@ -85,12 +85,12 @@ public class AuthService {
     }
 
     public FindIdRes findId(FindIdReq findIdReq) {
-        String phoneNum = findIdReq.getPhoneNum();
+        String email = findIdReq.getEmail();
         String name = findIdReq.getName();
 
-        verificationService.validateIsVerified(phoneNum, VerifyingType.FIND_ID);
+        verificationService.validateIsVerified(email, VerifyingType.FIND_ID);
 
-        List<User> users = userRepository.findAllByNameAndPhoneNum(name,phoneNum);
+        List<User> users = userRepository.findAllByNameAndEmail(name,email);
         List<String> uids = users.stream().map(User::getUid).collect(Collectors.toList());
 
         return FindIdRes.builder()
@@ -100,12 +100,12 @@ public class AuthService {
 
     @Transactional
     public void changePw(ChangePwReq changePwReq) {
-        String phoneNum = changePwReq.getPhoneNum();
+        String email = changePwReq.getEmail();
         String uid = changePwReq.getUid();
         String newPassword = changePwReq.getNewPassword();
         String confirmPassword = changePwReq.getConfirmPassword();
 
-        verificationService.validateIsVerified(phoneNum, VerifyingType.FIND_PW);
+        verificationService.validateIsVerified(email, VerifyingType.FIND_PW);
         validateNewPassword(newPassword,confirmPassword);
 
         User user = userRepository.findByUid(uid).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
