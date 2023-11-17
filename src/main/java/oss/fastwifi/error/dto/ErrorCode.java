@@ -47,7 +47,8 @@ public enum ErrorCode {
 
     UNEXISTING_ID(HttpStatus.BAD_REQUEST, "V-005", "해당 아이디의 유저는 존재하지 않습니다."),
 
-    UNMATCHING_PHONE_NUM(HttpStatus.BAD_REQUEST, "V-006", "회원정보에 등록된 전화번호와 일치하지 않습니다.");
+    UNMATCHING_PHONE_NUM(HttpStatus.BAD_REQUEST, "V-006", "회원정보에 등록된 전화번호와 일치하지 않습니다."),
+    UNABLE_TO_SEND_EMAIL(HttpStatus.BAD_REQUEST, "V-007", "메일을 보낼 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;
