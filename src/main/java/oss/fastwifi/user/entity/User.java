@@ -28,6 +28,8 @@ public class User implements UserDetails {
 
     private String name;
 
+    private String phoneNum;
+
     @ColumnDefault("False")
     private Boolean isAuth;
 
@@ -66,10 +68,15 @@ public class User implements UserDetails {
     }
 
     @Builder
-    public User(String uid, String password, String name){
+    public User(String uid, String password, String name, String phoneNum){
         this.uid = uid;
         this.password = password;
         this.name = name;
+        this.phoneNum = phoneNum;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
     }
 
 
