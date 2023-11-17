@@ -10,15 +10,17 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import oss.jwt.CustomAuthenticationEntryPoint;
-import oss.jwt.JwtAuthenticationFilter;
-import oss.jwt.JwtExceptionFilter;
-import oss.jwt.JwtTokenProvider;
+import oss.fastwifi.jwt.CustomAuthenticationEntryPoint;
+import oss.fastwifi.jwt.JwtAuthenticationFilter;
+import oss.fastwifi.jwt.JwtExceptionFilter;
+import oss.fastwifi.jwt.JwtTokenProvider;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] PERMIT_URLS = {
             "wifi","wifiList",
@@ -26,8 +28,6 @@ public class SecurityConfig {
             "/auth/sign-up", "/auth/login", "/auth/id-available", "/auth/refresh", "/auth/find-id", "/auth/change-pw",
             "/verification/**", "/oauth/**"
     };
-
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

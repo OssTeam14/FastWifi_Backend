@@ -1,4 +1,4 @@
-package oss.jwt;
+package oss.fastwifi.jwt;
 
 import lombok.Getter;
 import oss.fastwifi.error.dto.ErrorCode;

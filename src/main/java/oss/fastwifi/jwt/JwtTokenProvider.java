@@ -1,4 +1,4 @@
-package oss.jwt;
+package oss.fastwifi.jwt;
 
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +19,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
-
+@RequiredArgsConstructor
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class JwtTokenProvider {
-    private final String AUTHORITIES_KEY = "auth";
-    private final String BEARER_TYPE = "Bearer";
-
-    @Value("${jwt.access-token-valid-minute}")
+    @Value("${spring.jwt.access-token-valid-minute}")
     private long accessTokenValidTime;
-    @Value("${jwt.access-token-valid-minute}")
+    @Value("${spring.jwt.access-token-valid-minute}")
     private long refreshTokenValidTime;
 
-    @Value("${jwt.secret}")
+    @Value("${spring.jwt.secret}")
     private String secretKey;
 
     private final CustomUserDetailsService userDetailsService;

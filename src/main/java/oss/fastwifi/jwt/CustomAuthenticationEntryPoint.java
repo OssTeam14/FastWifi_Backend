@@ -1,4 +1,4 @@
-package oss.jwt;
+package oss.fastwifi.jwt;
 
 import org.json.simple.JSONObject;
 import org.springframework.security.core.AuthenticationException;
