@@ -1,18 +1,9 @@
 package oss.fastwifi.verification.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import oss.fastwifi.common.RedisService;
 import oss.fastwifi.error.exception.BusinessException;
 import oss.fastwifi.user.entity.User;
@@ -20,19 +11,8 @@ import oss.fastwifi.user.repository.UserRepository;
 import oss.fastwifi.verification.dto.VerifyingType;
 import oss.fastwifi.verification.dto.request.*;
 import oss.fastwifi.error.dto.ErrorCode;
-import oss.fastwifi.verification.dto.response.NaverSmsRes;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -42,7 +22,7 @@ import java.util.Random;
 public class VerificationService {
     private static final String VERIFIED_FLAG = "VERIFIED";
     private static final long VERIFICATION_CODE_VALID_MINUTE = 10;
-
+    private static final long VERIFIED_FLAG_VALID_MINUTE = 20;
     private static final int VERIFICATION_CODE_LENGTH = 6;
 
     private final RedisService redisService;
@@ -51,7 +31,7 @@ public class VerificationService {
 
     public void signUpCode(SignUpCodeReq signUpCodeReq) {
         try {
-            sendVerifiedCodeByEmail(signUpCodeReq.getPhoneNum(), VerifyingType.SIGN_UP);
+            sendVerifiedCodeByEmail(signUpCodeReq.getEmail(), VerifyingType.SIGN_UP);
         } catch (Exception e) {
             log.error("error while sending verification code: {}", e);
         }
@@ -59,14 +39,14 @@ public class VerificationService {
 
     public void findIdCode(FindIdCodeReq findIdCodeReq) {
         String name = findIdCodeReq.getName();
-        String phoneNum = findIdCodeReq.getPhoneNum();
+        String email = findIdCodeReq.getEmail();
 
-        if (!userRepository.existsByNameAndPhoneNum(name,phoneNum)) {
+        if (!userRepository.existsByNameAndEmail(name,email)) {
             throw new BusinessException(ErrorCode.UNEXISTING_USER);
         }
 
         try {
-            sendVerifiedCodeByEmail(phoneNum, VerifyingType.FIND_ID);
+            sendVerifiedCodeByEmail(email, VerifyingType.FIND_ID);
         } catch (Exception e) {
             log.error("error while sending verification code: {}", e);
         }
@@ -74,29 +54,29 @@ public class VerificationService {
 
     public void findPwCode(FindPwCodeReq findPwCodeReq) {
         String uid = findPwCodeReq.getUid();
-        String phoneNum = findPwCodeReq.getPhoneNum();
+        String email = findPwCodeReq.getEmail();
 
         if (!userRepository.existsByUid(uid)) {
             throw new BusinessException(ErrorCode.UNEXISTING_ID);
         }
 
         User user = userRepository.findByUid(uid).get();
-        if (!phoneNum.equals(user.getPhoneNum())) {
+        if (!email.equals(user.getEmail())) {
             throw new BusinessException(ErrorCode.UNMATCHING_PHONE_NUM);
         }
 
         try {
-            sendSms(phoneNum, VerifyingType.FIND_PW);
+            sendVerifiedCodeByEmail(email, VerifyingType.FIND_PW);
         } catch (Exception e) {
             log.error("error while sending verification code: {}", e);
         }
     }
 
     public void verify(VerifyReq verifyReq) {
-        String phoneNum = verifyReq.getPhoneNum();
+        String email = verifyReq.getEmail();
         String requestCode = verifyReq.getCode();
         VerifyingType verifyingType = verifyReq.getVerifyingType();
-        String redisKey = verifyingType + phoneNum;
+        String redisKey = verifyingType + email;
 
         if (!redisService.hasKey(redisKey)) {
             throw new BusinessException(ErrorCode.EXPIRED_VERIFICATION_CODE);
@@ -110,8 +90,8 @@ public class VerificationService {
         redisService.setValues(redisKey, VERIFIED_FLAG, Duration.ofMinutes(VERIFIED_FLAG_VALID_MINUTE));
     }
 
-    public void validateIsVerified(String phoneNum, VerifyingType verifyingType) {
-        String redisKey = verifyingType + phoneNum;
+    public void validateIsVerified(String email, VerifyingType verifyingType) {
+        String redisKey = verifyingType + email;
         String flag = redisService.getValues(redisKey);
 
         if (flag == null || !flag.equals(VERIFIED_FLAG)) {
@@ -129,6 +109,7 @@ public class VerificationService {
         log.info("verification type: {}", verifyingType);
 
         mailService.sendEmail(email, VERIFICATION_CODE_VALID_MINUTE, verificationCode);
+
         redisService.setValues(verifyingType + email, verificationCode, Duration.ofMinutes(VERIFICATION_CODE_VALID_MINUTE));
     }
 
