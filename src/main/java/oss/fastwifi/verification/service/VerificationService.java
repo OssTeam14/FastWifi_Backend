@@ -40,30 +40,18 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VerificationService {
-    private static final int VERIFICATION_CODE_LENGTH = 6;
-    private static final long VERIFICATION_CODE_VALID_MINUTE = 10;
-    private static final long VERIFIED_FLAG_VALID_MINUTE = 20;
     private static final String VERIFIED_FLAG = "VERIFIED";
+    private static final long VERIFICATION_CODE_VALID_MINUTE = 10;
 
-    @Value("${naver-cloud-sms.accessKey}")
-    private String accessKey;
-
-    @Value("${naver-cloud-sms.secretKey}")
-    private String secretKey;
-
-    @Value("${naver-cloud-sms.serviceId}")
-    private String serviceId;
-
-    @Value("${naver-cloud-sms.senderPhone}")
-    private String senderPhone;
+    private static final int VERIFICATION_CODE_LENGTH = 6;
 
     private final RedisService redisService;
-
+    private final MailService mailService;
     private final UserRepository userRepository;
 
     public void signUpCode(SignUpCodeReq signUpCodeReq) {
         try {
-            sendSms(signUpCodeReq.getPhoneNum(), VerifyingType.SIGN_UP);
+            sendVerifiedCodeByEmail(signUpCodeReq.getPhoneNum(), VerifyingType.SIGN_UP);
         } catch (Exception e) {
             log.error("error while sending verification code: {}", e);
         }
@@ -78,7 +66,7 @@ public class VerificationService {
         }
 
         try {
-            sendSms(phoneNum, VerifyingType.FIND_ID);
+            sendVerifiedCodeByEmail(phoneNum, VerifyingType.FIND_ID);
         } catch (Exception e) {
             log.error("error while sending verification code: {}", e);
         }
@@ -133,83 +121,15 @@ public class VerificationService {
         redisService.deleteValues(redisKey);
     }
 
-    private void sendSms(String receiverPhone, VerifyingType verifyingType) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        Long time = System.currentTimeMillis();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("x-ncp-apigw-timestamp", time.toString());
-        headers.set("x-ncp-iam-access-key", accessKey);
-        headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
-
+    public void sendVerifiedCodeByEmail(String email, VerifyingType verifyingType){
         String verificationCode = makeRandomNumber();
 
-        log.info("receiver phone number: {}", receiverPhone);
+        log.info("receiver Email: {}", email);
         log.info("verification code: {}", verificationCode);
         log.info("verification type: {}", verifyingType);
 
-        redisService.setValues(verifyingType + receiverPhone, verificationCode, Duration.ofMinutes(VERIFICATION_CODE_VALID_MINUTE));
-
-        String messageContent = new StringBuilder()
-                .append("[매치업] ")
-                .append(verificationCode)
-                .append(" 인증번호를 입력해주세요.")
-                .append("\n")
-                .append("인증번호 유효시간은 " + VERIFICATION_CODE_VALID_MINUTE + "분입니다.")
-                .toString();
-
-        List<MessageDto> messages = new ArrayList<>();
-        messages.add(MessageDto.builder()
-                .to(receiverPhone)
-                .content(messageContent)
-                .build());
-
-        NaverSmsReq request = NaverSmsReq.builder()
-                .type("SMS")
-                .contentType("COMM")
-                .countryCode("82")
-                .from(senderPhone)
-                .content(messageContent)
-                .messages(messages)
-                .build();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonBody = objectMapper.writeValueAsString(request);
-        HttpEntity<String> httpBody = new HttpEntity<>(jsonBody, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
-        NaverSmsRes response = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, NaverSmsRes.class);
-    }
-
-    private String makeSignature(Long time) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
-        String space = " ";
-        String newLine = "\n";
-        String method = "POST";
-        String url = "/sms/v2/services/" + this.serviceId + "/messages";
-        String timestamp = time.toString();
-        String accessKey = this.accessKey;
-        String secretKey = this.secretKey;
-
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
-
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
-
-        byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-        String encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
-
-        return encodeBase64String;
+        mailService.sendEmail(email, VERIFICATION_CODE_VALID_MINUTE, verificationCode);
+        redisService.setValues(verifyingType + email, verificationCode, Duration.ofMinutes(VERIFICATION_CODE_VALID_MINUTE));
     }
 
     private String makeRandomNumber() {
@@ -221,4 +141,5 @@ public class VerificationService {
         }
         return numStr;
     }
+
 }
