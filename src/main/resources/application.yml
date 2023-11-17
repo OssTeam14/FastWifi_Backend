@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ls-eefcecbb035845dd195a9be7b91cd0b3bbc6e3c4.cgpplzxtydsz.ap-northeast-2.rds.amazonaws.com:3306/wifiInfo?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: fastwifi_back
+    password: 12345678
+
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    jwt:
+      secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
