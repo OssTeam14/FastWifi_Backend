@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import oss.fastwifi.auth.dto.request.ChangePwReq;
-import oss.fastwifi.auth.dto.request.FindIdReq;
-import oss.fastwifi.auth.dto.request.RefreshReq;
-import oss.fastwifi.auth.dto.request.SignUpReq;
+import oss.fastwifi.auth.dto.request.*;
 import oss.fastwifi.auth.dto.response.AccessTokenRes;
 import oss.fastwifi.auth.dto.response.FindIdRes;
+import oss.fastwifi.auth.dto.response.TokenRes;
 import oss.fastwifi.auth.service.AuthService;
 import oss.fastwifi.common.ResponseDto;
 import oss.fastwifi.user.entity.User;
@@ -23,10 +21,16 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/sign_up")
+    @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody @Valid SignUpReq signUpReq){
             authService.signUp(signUpReq);
             return ResponseDto.ok("회원가입 완료");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenRes> login(@RequestBody @Valid LoginReq loginReq) {
+        TokenRes token = authService.login(loginReq);
+        return ResponseDto.ok(token);
     }
 
     @GetMapping("/id-available")
