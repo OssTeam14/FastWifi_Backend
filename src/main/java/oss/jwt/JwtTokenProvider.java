@@ -28,9 +28,9 @@ public class JwtTokenProvider {
     private final String BEARER_TYPE = "Bearer";
 
     @Value("${jwt.access-token-valid-minute}")
-    private long accessTokenValidTime; //30분
+    private long accessTokenValidTime;
     @Value("${jwt.access-token-valid-minute}")
-    private long refreshTokenValidTime; //7일
+    private long refreshTokenValidTime;
 
     @Value("${jwt.secret}")
     private String secretKey;
