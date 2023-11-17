@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import oss.fastwifi.wifi.dto.WifiMapper;
-import oss.fastwifi.wifi.dto.response.WifiForListDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithPwdDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
+import oss.fastwifi.wifi.dto.response.WifiForListRes;
+import oss.fastwifi.wifi.dto.response.WifiWithPwdRes;
+import oss.fastwifi.wifi.dto.response.WifiWithoutPwdRes;
 import oss.fastwifi.wifi.repository.WifiRepository;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class WifiService {
     private final WifiRepository wifiRepository;
     private final WifiMapper wifiMapper;
 
-    public List<WifiForListDTO> getWifiListWithoutPwd(String building, int floor){
-        List<WifiForListDTO> wifiList = wifiRepository.findAllByBuilding_NameAndBuilding_Floor(building, floor)
+    public List<WifiForListRes> getWifiListWithoutPwd(String building, int floor){
+        List<WifiForListRes> wifiList = wifiRepository.findAllByBuilding_NameAndBuilding_Floor(building, floor)
                 .stream()
                 .map(wifiMapper::toWifiForListDto)
                 .collect(Collectors.toList());
@@ -28,7 +28,7 @@ public class WifiService {
         return wifiList;
     }
 
-    public WifiWithPwdDTO getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
+    public WifiWithPwdRes getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
 
         return wifiMapper.toWifiWithPwdDto(
                 wifiRepository
@@ -37,7 +37,7 @@ public class WifiService {
         );
     }
 
-    public WifiWithoutPwdDTO getWifiInfoWithoutPwd(String buildingName, int floor, String wifiName){
+    public WifiWithoutPwdRes getWifiInfoWithoutPwd(String buildingName, int floor, String wifiName){
 
         return wifiMapper.toWifiWithoutPwdDto(
                 wifiRepository
