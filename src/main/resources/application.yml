@@ -21,12 +21,13 @@ spring:
   redis:
     host: 43.201.24.99
     port: 6379
+    password : 12345678
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: fastwifihost.mail@gmail.com
-    password: jtht aopk hran krid
+    username: fastwifihost@gmail.com
+    password: jthtaopkhrankrid
     properties:
       mail:
         smtp:
@@ -38,3 +39,13 @@ spring:
           timeout: 5000
           writetimeout: 5000
     auth-code-expiration-millis: 1000*60*10
+
+  security:
+    user:
+      name: changmin1
+      password: 12345678a
+
+logging:
+  level:
+    oss:
+      fastwifi: debug
