@@ -1,4 +1,4 @@
-package oss.fastwifi.auth.dto.response;
+package oss.fastwifi.auth.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
