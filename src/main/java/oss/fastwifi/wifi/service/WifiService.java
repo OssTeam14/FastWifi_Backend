@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import oss.fastwifi.wifi.dto.WifiMapper;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
-import oss.fastwifi.wifi.dto.response.WifiWithPwdRes;
-import oss.fastwifi.wifi.dto.response.WifiWithoutPwdRes;
+import oss.fastwifi.wifi.dto.response.WifiPwdRes;
+import oss.fastwifi.wifi.dto.response.WifiInfoRes;
 import oss.fastwifi.wifi.repository.WifiRepository;
 
 import java.util.List;
@@ -28,18 +28,18 @@ public class WifiService {
         return wifiList;
     }
 
-    public WifiWithPwdRes getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
+    public WifiPwdRes getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
 
-        return wifiMapper.toWifiWithPwdDto(
+        return wifiMapper.toWifiPwdRes(
                 wifiRepository
                         .findByBuilding_NameAndBuilding_FloorAndAndName(buildingName, floor, wifiName)
                         .orElse(null)
         );
     }
 
-    public WifiWithoutPwdRes getWifiInfoWithoutPwd(String buildingName, int floor, String wifiName){
+    public WifiInfoRes getWifiInfoWithoutPwd(String buildingName, int floor, String wifiName){
 
-        return wifiMapper.toWifiWithoutPwdDto(
+        return wifiMapper.from(
                 wifiRepository
                         .findByBuilding_NameAndBuilding_FloorAndAndName(buildingName, floor, wifiName)
                         .orElse(null)
