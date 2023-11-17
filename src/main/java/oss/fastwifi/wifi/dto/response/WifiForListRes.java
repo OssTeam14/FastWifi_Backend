@@ -8,7 +8,7 @@ import oss.fastwifi.wifi.dto.enums.WifiSpeed;
 @Getter
 @Setter
 @Builder
-public class WifiForListDTO {
+public class WifiForListRes {
     private String name;
     private WifiSpeed speed;
 }

@@ -10,12 +10,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class WifiWithPwdDTO {
-
+public class WifiWithoutPwdRes {
     private String name;
-    private String password;
     private Integer downloadSpeed;
     private Integer uploadSpeed;
     private LocalDate lastUpdate;
     private Building building;
+
+
 }
