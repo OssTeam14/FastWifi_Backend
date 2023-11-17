@@ -2,58 +2,53 @@ package oss.fastwifi.wifi.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import oss.fastwifi.wifi.dto.response.WifiForListDTO;
-import oss.fastwifi.wifi.dto.response.WifiWithoutPwdDTO;
-import oss.fastwifi.wifi.response.Response;
-import oss.fastwifi.wifi.response.StatusEnum;
+import org.springframework.web.bind.annotation.*;
+import oss.fastwifi.common.ResponseDto;
+import oss.fastwifi.wifi.dto.request.UnitReq;
+import oss.fastwifi.wifi.dto.request.WifiReq;
+import oss.fastwifi.wifi.dto.response.WifiForListRes;
+import oss.fastwifi.wifi.dto.response.WifiInfoRes;
+import oss.fastwifi.wifi.dto.response.WifiPwdRes;
 import oss.fastwifi.wifi.service.WifiService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/wifi")
 public class WifiController {
 
     private final WifiService wifiService;
 
-    @GetMapping("/{building}/{floor}")
-    public ResponseEntity<Response> buildingAndFloor(
-            @PathVariable String building,
-            @PathVariable int floor
-    ){
-        List<WifiForListDTO> wifiList = wifiService.getWifiListWithoutPwd(building, floor);
+    @GetMapping("/wifiList")
+    public ResponseEntity<List<WifiForListRes>> buildingAndFloor(
+            @RequestBody @Valid UnitReq unitReq
+            ){
+        List<WifiForListRes> wifiList = wifiService
+                .getWifiListWithoutPwd(unitReq.getBuildingName(),unitReq.getFloor());
 
-        Response body = Response.builder()
-                .status(StatusEnum.OK)
-                .data(wifiList)
-                .message(building + floor + "층 와이파이 정보")
-                .build();
-
-        return new ResponseEntity<>(body,Response.getDefaultHeader(), HttpStatus.OK);
+        return ResponseDto.ok(wifiList);
     }
 
-    @GetMapping("/{building}/{floor}/{wifiName}")
-    public ResponseEntity<Response> wifiInfoWithoutPwd(
-            @PathVariable String building,
-            @PathVariable int floor,
-            @PathVariable String wifiName
+    @GetMapping("/wifi")
+    public ResponseEntity<WifiInfoRes> wifiInfoWithoutPwd(
+            @RequestBody @Valid WifiReq wifiReq
+            ){
+        WifiInfoRes wifiList = wifiService
+                .getWifiInfoWithoutPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
+
+        return ResponseDto.ok(wifiList);
+    }
+
+    @GetMapping("/pwd")
+    public ResponseEntity<WifiPwdRes> requestPwd(
+            @RequestBody @Valid WifiReq wifiReq
     ){
-        WifiWithoutPwdDTO wifiList = wifiService.getWifiInfoWithoutPwd(building, floor, wifiName);
+        WifiPwdRes pwd = wifiService
+                .getWifiInfoWithPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
 
-        Response body = Response.builder()
-                .status(StatusEnum.OK)
-                .data(wifiList)
-                .message(building + floor + "층 " + wifiName + " 와이파이 정보")
-                .build();
-
-        return new ResponseEntity<>(body,Response.getDefaultHeader(), HttpStatus.OK);
+        return ResponseDto.ok(pwd);
     }
 }
