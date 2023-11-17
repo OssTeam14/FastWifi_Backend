@@ -3,8 +3,10 @@ package oss.fastwifi.wifi.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import oss.fastwifi.common.ResponseDto;
+import oss.fastwifi.user.entity.User;
 import oss.fastwifi.wifi.dto.request.UnitReq;
 import oss.fastwifi.wifi.dto.request.WifiReq;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
@@ -44,7 +46,7 @@ public class WifiController {
 
     @GetMapping("/pwd")
     public ResponseEntity<WifiPwdRes> requestPwd(
-            @RequestBody @Valid WifiReq wifiReq
+            @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal User user
     ){
         WifiPwdRes pwd = wifiService
                 .getWifiInfoWithPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
