@@ -49,7 +49,7 @@ public class WifiController {
             @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal User user
     ){
         WifiPwdRes pwd = wifiService
-                .getWifiInfoWithPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
+                .getWifiPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
 
         return ResponseDto.ok(pwd);
     }

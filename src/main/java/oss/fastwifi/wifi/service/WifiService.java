@@ -28,7 +28,7 @@ public class WifiService {
         return wifiList;
     }
 
-    public WifiPwdRes getWifiInfoWithPwd(String buildingName, int floor, String wifiName){
+    public WifiPwdRes getWifiPwd(String buildingName, int floor, String wifiName){
 
         return wifiMapper.toWifiPwdRes(
                 wifiRepository
