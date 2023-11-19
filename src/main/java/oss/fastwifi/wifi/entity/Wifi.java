@@ -22,7 +22,7 @@ public class Wifi {
     private Integer uploadSpeed;
     private LocalDate lastUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "building_id")
     private Building building;
 
