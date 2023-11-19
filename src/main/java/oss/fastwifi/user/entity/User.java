@@ -5,10 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -17,7 +14,7 @@ import java.util.HashSet;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -29,8 +26,8 @@ public class User implements UserDetails {
 
     private String email;
 
-    @ColumnDefault("False")
-    private Boolean isAuth;
+    @ColumnDefault("REFUSAL")
+    private SchoolCertification schoolCertification;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
