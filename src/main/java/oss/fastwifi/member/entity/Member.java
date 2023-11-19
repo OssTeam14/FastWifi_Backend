@@ -26,7 +26,7 @@ public class Member implements UserDetails {
 
     private String email;
 
-    Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'REFUSAL'")
     private SchoolCertification schoolCertification;
 
