@@ -10,7 +10,7 @@ import oss.fastwifi.auth.dto.response.FindIdRes;
 import oss.fastwifi.auth.dto.response.TokenRes;
 import oss.fastwifi.auth.service.AuthService;
 import oss.fastwifi.common.ResponseDto;
-import oss.fastwifi.user.entity.User;
+import oss.fastwifi.member.entity.Member;
 
 import javax.validation.Valid;
 
@@ -46,8 +46,8 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(@AuthenticationPrincipal User user) {
-        authService.logout(user.getId());
+    public ResponseEntity<String> logout(@AuthenticationPrincipal Member member) {
+        authService.logout(member.getId());
         return ResponseDto.ok("로그아웃 성공");
     }
 

@@ -1,4 +1,4 @@
-package oss.fastwifi.user.entity;
+package oss.fastwifi.member.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,7 +12,7 @@ import java.util.HashSet;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails {
+public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     private String email;
 
-    @ColumnDefault("REFUSAL")
+    @Column(columnDefinition = "VARCHAR(10) DEFAULT 'REFUSAL'")
     private SchoolCertification schoolCertification;
 
     @Override
@@ -64,7 +64,7 @@ public class User implements UserDetails {
     }
 
     @Builder
-    public User(String uid, String password, String name, String email){
+    public Member(String uid, String password, String name, String email){
         this.uid = uid;
         this.password = password;
         this.name = name;

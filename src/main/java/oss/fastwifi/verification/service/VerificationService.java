@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import oss.fastwifi.common.RedisService;
 import oss.fastwifi.error.exception.BusinessException;
-import oss.fastwifi.user.entity.User;
-import oss.fastwifi.user.repository.UserRepository;
+import oss.fastwifi.member.entity.Member;
+import oss.fastwifi.member.repository.MemberRepository;
 import oss.fastwifi.verification.dto.VerifyingType;
 import oss.fastwifi.verification.dto.request.*;
 import oss.fastwifi.error.dto.ErrorCode;
@@ -27,7 +27,7 @@ public class VerificationService {
 
     private final RedisService redisService;
     private final MailService mailService;
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     public void signUpCode(SignUpCodeReq signUpCodeReq) {
         try {
@@ -60,8 +60,8 @@ public class VerificationService {
             throw new BusinessException(ErrorCode.UNEXISTING_ID);
         }
 
-        User user = userRepository.findByUid(uid).get();
-        if (!email.equals(user.getEmail())) {
+        Member member = userRepository.findByUid(uid).get();
+        if (!email.equals(member.getEmail())) {
             throw new BusinessException(ErrorCode.UNMATCHING_PHONE_NUM);
         }
 

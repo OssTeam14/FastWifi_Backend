@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import oss.fastwifi.common.ResponseDto;
-import oss.fastwifi.user.entity.User;
+import oss.fastwifi.member.entity.Member;
 import oss.fastwifi.wifi.dto.request.UnitReq;
 import oss.fastwifi.wifi.dto.request.WifiReq;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
@@ -46,9 +46,9 @@ public class WifiController {
 
     @GetMapping("/pwd")
     public ResponseEntity<WifiPwdRes> requestPwd(
-            @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal User user
+            @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal Member member
     ){
-        wifiService.checkSchoolCertification(user.getSchoolCertification());
+        wifiService.checkSchoolCertification(member.getSchoolCertification());
         WifiPwdRes pwd = wifiService
                 .getWifiPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
         return ResponseDto.ok(pwd);

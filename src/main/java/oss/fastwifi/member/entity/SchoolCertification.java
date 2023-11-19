@@ -1,4 +1,4 @@
-package oss.fastwifi.user.entity;
+package oss.fastwifi.member.entity;
 
 public enum SchoolCertification {
     APPROVED, REFUSAL

@@ -11,8 +11,8 @@ import oss.fastwifi.auth.dto.response.TokenRes;
 import oss.fastwifi.auth.repository.RefreshTokenRedisRepository;
 import oss.fastwifi.error.dto.ErrorCode;
 import oss.fastwifi.error.exception.BusinessException;
-import oss.fastwifi.user.entity.User;
-import oss.fastwifi.user.repository.UserRepository;
+import oss.fastwifi.member.entity.Member;
+import oss.fastwifi.member.repository.MemberRepository;
 import oss.fastwifi.verification.dto.VerifyingType;
 import oss.fastwifi.verification.service.VerificationService;
 import oss.fastwifi.jwt.JwtTokenProvider;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
     private final VerificationService verificationService;
@@ -39,7 +39,7 @@ public class AuthService {
             throw new BusinessException(ErrorCode.ID_ALREADY_EXISTS);
         }
 
-        userRepository.save(User.builder()
+        userRepository.save(Member.builder()
                 .uid(signUpReq.getUid())
                 .password(passwordEncoder.encode(signUpReq.getPassword()))
                 .email(signUpReq.getPhoneNum())
@@ -48,13 +48,13 @@ public class AuthService {
     }
 
     public TokenRes login(LoginReq loginReq) {
-        User user = userRepository.findByUid(loginReq.getUid()).orElseThrow(() -> new BusinessException(ErrorCode.WRONG_ID));
-        if (!passwordEncoder.matches(loginReq.getPassword(), user.getPassword())) {
+        Member member = userRepository.findByUid(loginReq.getUid()).orElseThrow(() -> new BusinessException(ErrorCode.WRONG_ID));
+        if (!passwordEncoder.matches(loginReq.getPassword(), member.getPassword())) {
             throw new BusinessException(ErrorCode.WRONG_PW);
         }
         TokenRes token = TokenRes.builder()
-                .accessToken(jwtTokenProvider.createAccessToken(user.getId()))
-                .refreshToken(jwtTokenProvider.createRefreshToken(user.getId()))
+                .accessToken(jwtTokenProvider.createAccessToken(member.getId()))
+                .refreshToken(jwtTokenProvider.createRefreshToken(member.getId()))
                 .build();
         return token;
     }
@@ -90,8 +90,8 @@ public class AuthService {
 
         verificationService.validateIsVerified(email, VerifyingType.FIND_ID);
 
-        List<User> users = userRepository.findAllByNameAndEmail(name,email);
-        List<String> uids = users.stream().map(User::getUid).collect(Collectors.toList());
+        List<Member> members = userRepository.findAllByNameAndEmail(name,email);
+        List<String> uids = members.stream().map(Member::getUid).collect(Collectors.toList());
 
         return FindIdRes.builder()
                 .uids(uids)
@@ -108,8 +108,8 @@ public class AuthService {
         verificationService.validateIsVerified(email, VerifyingType.FIND_PW);
         validateNewPassword(newPassword,confirmPassword);
 
-        User user = userRepository.findByUid(uid).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
-        user.updatePassword(passwordEncoder.encode(newPassword));
+        Member member = userRepository.findByUid(uid).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+        member.updatePassword(passwordEncoder.encode(newPassword));
     }
 
     private void validateNewPassword(String newPassword, String confirmPassword) {
