@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User implements UserDetails {

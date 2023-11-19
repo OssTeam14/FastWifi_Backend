@@ -6,7 +6,6 @@ import lombok.Setter;
 import oss.fastwifi.wifi.dto.enums.WifiSpeed;
 
 @Getter
-@Setter
 @Builder
 public class WifiForListRes {
     private String name;

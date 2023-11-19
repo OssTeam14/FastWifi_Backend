@@ -10,7 +10,6 @@ import javax.validation.constraints.Pattern;
 import static oss.fastwifi.common.Constants.MAIL_REGEXP;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class FindIdReq {
     @NotBlank

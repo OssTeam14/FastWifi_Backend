@@ -8,7 +8,6 @@ import oss.fastwifi.wifi.entity.Building;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 @Builder
 public class WifiInfoRes {
     private String name;

@@ -1,11 +1,13 @@
 package oss.fastwifi.wifi.dto.request;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class WifiReq {
     @NotBlank(message = "건물 이름이 필요합니다.")
     private String buildingName;
