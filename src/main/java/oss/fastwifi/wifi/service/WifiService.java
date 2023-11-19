@@ -3,6 +3,9 @@ package oss.fastwifi.wifi.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import oss.fastwifi.error.dto.ErrorCode;
+import oss.fastwifi.error.exception.BusinessException;
+import oss.fastwifi.user.entity.SchoolCertification;
 import oss.fastwifi.wifi.dto.WifiMapper;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
 import oss.fastwifi.wifi.dto.response.WifiPwdRes;
@@ -44,6 +47,12 @@ public class WifiService {
                         .findByBuilding_NameAndBuilding_FloorAndAndName(buildingName, floor, wifiName)
                         .orElse(null)
         );
+    }
+
+    public void checkSchoolCertification(SchoolCertification authType){
+        if(authType.equals(SchoolCertification.REFUSAL)){
+            throw new BusinessException(ErrorCode.EXPIRED_VERIFICATION_CODE);
+        }
     }
 
 }

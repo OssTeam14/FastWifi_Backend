@@ -48,9 +48,9 @@ public class WifiController {
     public ResponseEntity<WifiPwdRes> requestPwd(
             @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal User user
     ){
+        wifiService.checkSchoolCertification(user.getSchoolCertification());
         WifiPwdRes pwd = wifiService
                 .getWifiPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
-
         return ResponseDto.ok(pwd);
     }
 }
