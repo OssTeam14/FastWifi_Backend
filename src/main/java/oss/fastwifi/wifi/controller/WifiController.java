@@ -7,11 +7,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import oss.fastwifi.common.ResponseDto;
 import oss.fastwifi.member.entity.Member;
+import oss.fastwifi.wifi.dto.request.BuildingReq;
 import oss.fastwifi.wifi.dto.request.UnitReq;
 import oss.fastwifi.wifi.dto.request.WifiReq;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
 import oss.fastwifi.wifi.dto.response.WifiInfoRes;
 import oss.fastwifi.wifi.dto.response.WifiPwdRes;
+import oss.fastwifi.wifi.entity.Building;
 import oss.fastwifi.wifi.service.WifiService;
 
 import javax.validation.Valid;
@@ -23,6 +25,15 @@ import java.util.List;
 public class WifiController {
 
     private final WifiService wifiService;
+
+    @GetMapping("/floors")
+    public ResponseEntity<List<Integer>> floor(
+            @RequestBody BuildingReq building
+            ){
+        List<Integer> floorListInfo = wifiService.getFloorListInfo(building.getBuildingName());
+
+        return ResponseDto.ok(floorListInfo);
+    }
 
     @GetMapping("/wifiList")
     public ResponseEntity<List<WifiForListRes>> buildingAndFloor(

@@ -10,6 +10,8 @@ import oss.fastwifi.wifi.dto.WifiMapper;
 import oss.fastwifi.wifi.dto.response.WifiForListRes;
 import oss.fastwifi.wifi.dto.response.WifiPwdRes;
 import oss.fastwifi.wifi.dto.response.WifiInfoRes;
+import oss.fastwifi.wifi.entity.Building;
+import oss.fastwifi.wifi.repository.BuildingRepository;
 import oss.fastwifi.wifi.repository.WifiRepository;
 
 import java.util.List;
@@ -20,7 +22,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WifiService {
     private final WifiRepository wifiRepository;
+    private final BuildingRepository buildingRepository;
     private final WifiMapper wifiMapper;
+
+    public List<Integer> getFloorListInfo(String building){
+
+        List<Building> buildingList = buildingRepository.findByName(building);
+        return buildingList.stream().map(buildingInfo -> buildingInfo.getFloor()).toList();
+    }
 
     public List<WifiForListRes> getWifiListWithoutPwd(String building, int floor){
         List<WifiForListRes> wifiList = wifiRepository.findAllByBuilding_NameAndBuilding_Floor(building, floor)
