@@ -7,6 +7,15 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+
+    WRONG_ID(HttpStatus.BAD_REQUEST, "A-001", "존재하지 않는 아이디입니다."),
+
+    WRONG_PW(HttpStatus.BAD_REQUEST, "A-002", "비밀번호가 일치하지 않습니다."),
+
+    ID_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "A-003", "이미 사용중인 아이디 입니다."),
+
+    UNMATCHING_NEW_PASSWORD(HttpStatus.BAD_REQUEST, "A-004", "비밀번호가 일치하지 않습니다."),
+
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "C-000", "잘못된 요청입니다\n다시 한 번 확인해주세요"),
 
     NOT_FOUND(HttpStatus.NOT_FOUND, "C-001", "리소스를 찾을 수 없음"),
@@ -23,19 +32,13 @@ public enum ErrorCode {
 
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "C-007", "로그인이 필요합니다."),
 
+    NOT_SCHOOL_CERTIFICATION(HttpStatus.FORBIDDEN, "F-001", "학교 인증이 되지 않았습니다."),
+
     INVALID_JWT_TOKEN(HttpStatus.UNAUTHORIZED, "J-001", "유효하지 않은 JWT 토큰입니다."),
 
     EXPIRED_JWT_TOKEN(HttpStatus.UNAUTHORIZED, "J-002", "만료된 JWT 토큰입니다."),
 
     UNSUPPORTED_JWT_TOKEN(HttpStatus.UNAUTHORIZED, "J-003", "지원하지 않는 JWT 토큰입니다."),
-
-    WRONG_ID(HttpStatus.BAD_REQUEST, "A-001", "존재하지 않는 아이디입니다."),
-
-    WRONG_PW(HttpStatus.BAD_REQUEST, "A-002", "비밀번호가 일치하지 않습니다."),
-
-    ID_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "A-003", "이미 사용중인 아이디 입니다."),
-
-    UNMATCHING_NEW_PASSWORD(HttpStatus.BAD_REQUEST, "A-004", "비밀번호가 일치하지 않습니다."),
 
     INCORRECT_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, "V-001", "잘못된 인증번호입니다."),
 
