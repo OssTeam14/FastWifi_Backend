@@ -26,6 +26,7 @@ public class Member implements UserDetails {
 
     private String email;
 
+    Enumerated
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'REFUSAL'")
     private SchoolCertification schoolCertification;
 
@@ -64,11 +65,12 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member(String uid, String password, String name, String email){
+    public Member(String uid, String password, String name, String email, SchoolCertification schoolCertification){
         this.uid = uid;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.schoolCertification = schoolCertification;
     }
 
     public void updatePassword(String password) {
