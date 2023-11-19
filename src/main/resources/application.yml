@@ -19,7 +19,7 @@ spring:
     access-token-valid-minute: 30
 
   redis:
-    host: 43.201.24.99
+    host: 3.35.132.61
     port: 6379
     password : 12345678
 
