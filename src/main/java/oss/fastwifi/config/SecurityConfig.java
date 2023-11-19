@@ -23,7 +23,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] PERMIT_URLS = {
-            "wifi","wifiList",
+            "/wifi","/wifiList",
             /* apis */
             "/auth/sign-up", "/auth/login", "/auth/id-available", "/auth/refresh", "/auth/find-id", "/auth/change-pw",
             "/verification/**", "/oauth/**"
