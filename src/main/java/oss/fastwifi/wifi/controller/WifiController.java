@@ -26,7 +26,7 @@ public class WifiController {
 
     private final WifiService wifiService;
 
-    @GetMapping("/floors")
+    @PostMapping("/floors")
     public ResponseEntity<List<Integer>> floor(
             @RequestBody BuildingReq building
             ){
@@ -35,7 +35,7 @@ public class WifiController {
         return ResponseDto.ok(floorListInfo);
     }
 
-    @GetMapping("/wifiList")
+    @PostMapping("/wifiList")
     public ResponseEntity<List<WifiForListRes>> buildingAndFloor(
             @RequestBody @Valid UnitReq unitReq
             ){
@@ -45,7 +45,7 @@ public class WifiController {
         return ResponseDto.ok(wifiList);
     }
 
-    @GetMapping("/wifi")
+    @PostMapping("/wifi")
     public ResponseEntity<WifiInfoRes> wifiInfoWithoutPwd(
             @RequestBody @Valid WifiReq wifiReq
             ){
@@ -55,13 +55,14 @@ public class WifiController {
         return ResponseDto.ok(wifiList);
     }
 
-    @GetMapping("/pwd")
+    @PostMapping("/pwd")
     public ResponseEntity<WifiPwdRes> requestPwd(
             @RequestBody @Valid WifiReq wifiReq, @AuthenticationPrincipal Member member
     ){
         wifiService.checkSchoolCertification(member.getSchoolCertification());
         WifiPwdRes pwd = wifiService
                 .getWifiPwd(wifiReq.getBuildingName(), wifiReq.getFloor(), wifiReq.getWifiName());
+
         return ResponseDto.ok(pwd);
     }
 }
