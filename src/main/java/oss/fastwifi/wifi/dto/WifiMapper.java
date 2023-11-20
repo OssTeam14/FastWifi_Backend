@@ -15,6 +15,7 @@ public interface WifiMapper {
     WifiPwdRes toWifiPwdRes(Wifi wifi);
 
     @Mapping(source = "downloadSpeed", target = "speed")
+    @Mapping(source = "password", target = "isPwd")
     WifiForListRes toWifiForListDto(Wifi wifi);
 
     default WifiSpeed toWifiSpeed(int speed) {
@@ -25,5 +26,13 @@ public interface WifiMapper {
         } else{
             return WifiSpeed.FAST;
         }
+    }
+
+    default Boolean toIsPwd(String pwd) {
+        if(pwd.isBlank()){
+            return false;
+        }
+
+        return true;
     }
 }

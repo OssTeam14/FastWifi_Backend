@@ -10,4 +10,5 @@ import oss.fastwifi.wifi.dto.enums.WifiSpeed;
 public class WifiForListRes {
     private String name;
     private WifiSpeed speed;
+    private Boolean isPwd;
 }
