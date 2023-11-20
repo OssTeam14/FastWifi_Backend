@@ -9,9 +9,11 @@ import oss.fastwifi.auth.dto.response.AccessTokenRes;
 import oss.fastwifi.auth.dto.response.FindIdRes;
 import oss.fastwifi.auth.dto.response.TokenRes;
 import oss.fastwifi.auth.repository.RefreshTokenRedisRepository;
+import oss.fastwifi.common.Constants;
 import oss.fastwifi.error.dto.ErrorCode;
 import oss.fastwifi.error.exception.BusinessException;
 import oss.fastwifi.member.entity.Member;
+import oss.fastwifi.member.entity.SchoolCertification;
 import oss.fastwifi.member.repository.MemberRepository;
 import oss.fastwifi.verification.dto.VerifyingType;
 import oss.fastwifi.verification.service.VerificationService;
@@ -19,6 +21,7 @@ import oss.fastwifi.jwt.JwtTokenProvider;
 import oss.fastwifi.jwt.RefreshToken;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,29 +29,34 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository userRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
     private final VerificationService verificationService;
 
     @Transactional
     public void signUp(SignUpReq signUpReq) {
-        verificationService.validateIsVerified(signUpReq.getPhoneNum(), VerifyingType.SIGN_UP);
+        verificationService.validateIsVerified(signUpReq.getEmail(), VerifyingType.SIGN_UP);
 
-        if(!checkUidAvailable(signUpReq.getUid())) {
+        if(!checkEmailAvailable(signUpReq.getEmail())) {
             throw new BusinessException(ErrorCode.ID_ALREADY_EXISTS);
         }
 
-        userRepository.save(Member.builder()
-                .uid(signUpReq.getUid())
+        SchoolCertification schoolCertification = SchoolCertification.REFUSAL;
+
+        if(Pattern.matches(Constants.KW_MAIL_REGEXP, signUpReq.getEmail())){
+            schoolCertification = SchoolCertification.APPROVED;
+        }
+
+        memberRepository.save(Member.builder()
                 .password(passwordEncoder.encode(signUpReq.getPassword()))
-                .email(signUpReq.getPhoneNum())
-                .name(signUpReq.getName())
+                .email(signUpReq.getEmail())
+                .schoolCertification(schoolCertification)
                 .build());
     }
 
     public TokenRes login(LoginReq loginReq) {
-        Member member = userRepository.findByUid(loginReq.getUid()).orElseThrow(() -> new BusinessException(ErrorCode.WRONG_ID));
+        Member member = memberRepository.findByEmail(loginReq.getEmail()).orElseThrow(() -> new BusinessException(ErrorCode.WRONG_ID));
         if (!passwordEncoder.matches(loginReq.getPassword(), member.getPassword())) {
             throw new BusinessException(ErrorCode.WRONG_PW);
         }
@@ -59,8 +67,8 @@ public class AuthService {
         return token;
     }
 
-    public boolean checkUidAvailable(String uid) {
-        return !userRepository.existsByUid(uid);
+    public boolean checkEmailAvailable(String email) {
+        return !memberRepository.existsByEmail(email);
     }
 
     public AccessTokenRes refresh(RefreshReq refreshReq) {
@@ -86,29 +94,28 @@ public class AuthService {
 
     public FindIdRes findId(FindIdReq findIdReq) {
         String email = findIdReq.getEmail();
-        String name = findIdReq.getName();
 
         verificationService.validateIsVerified(email, VerifyingType.FIND_ID);
 
-        List<Member> members = userRepository.findAllByNameAndEmail(name,email);
-        List<String> uids = members.stream().map(Member::getUid).collect(Collectors.toList());
+        List<Member> members = memberRepository.findAllByEmail(email);
+        List<String> emailList = members.stream().map(Member::getEmail).collect(Collectors.toList());
 
         return FindIdRes.builder()
-                .uids(uids)
+                .uids(emailList)
                 .build();
     }
 
     @Transactional
     public void changePw(ChangePwReq changePwReq) {
         String email = changePwReq.getEmail();
-        String uid = changePwReq.getUid();
+        String uid = changePwReq.getEmail();
         String newPassword = changePwReq.getNewPassword();
         String confirmPassword = changePwReq.getConfirmPassword();
 
         verificationService.validateIsVerified(email, VerifyingType.FIND_PW);
         validateNewPassword(newPassword,confirmPassword);
 
-        Member member = userRepository.findByUid(uid).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+        Member member = memberRepository.findByEmail(uid).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
         member.updatePassword(passwordEncoder.encode(newPassword));
     }
 
