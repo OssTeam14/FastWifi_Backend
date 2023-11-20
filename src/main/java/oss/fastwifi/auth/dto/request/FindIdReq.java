@@ -15,7 +15,4 @@ public class FindIdReq {
     @NotBlank
     @Pattern(regexp = MAIL_REGEXP, message = "유효하지 않은 메일 주소입니다.")
     private String email;
-
-    @NotBlank
-    private String name;
 }

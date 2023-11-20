@@ -16,9 +16,6 @@ public class ChangePwReq {
     private String email;
 
     @NotBlank
-    private String uid;
-
-    @NotBlank
     @Pattern(regexp = PW_REGEXP, message = "비밀번호는 8~16 자리의 영문 & 숫자 조합으로만 입력 가능합니다.")
     private String newPassword;
 

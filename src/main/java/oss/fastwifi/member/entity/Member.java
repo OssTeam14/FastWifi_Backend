@@ -15,14 +15,8 @@ import java.util.HashSet;
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
-
-    private String uid;
-
     private String password;
-
-    private String name;
 
     private String email;
 
@@ -65,10 +59,8 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member(String uid, String password, String name, String email, SchoolCertification schoolCertification){
-        this.uid = uid;
+    public Member(String password, String email, SchoolCertification schoolCertification){
         this.password = password;
-        this.name = name;
         this.email = email;
         this.schoolCertification = schoolCertification;
     }

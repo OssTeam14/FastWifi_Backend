@@ -34,8 +34,8 @@ public class AuthController {
     }
 
     @GetMapping("/id-available")
-    public ResponseEntity<Boolean> idAvailable(@RequestParam String uid) {
-        return ResponseDto.ok(authService.checkUidAvailable(uid));
+    public ResponseEntity<Boolean> idAvailable(@RequestParam String email) {
+        return ResponseDto.ok(authService.checkEmailAvailable(email));
     }
 
 

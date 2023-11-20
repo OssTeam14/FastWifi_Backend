@@ -41,7 +41,7 @@ public class VerificationService {
         String name = findIdCodeReq.getName();
         String email = findIdCodeReq.getEmail();
 
-        if (!userRepository.existsByNameAndEmail(name,email)) {
+        if (!userRepository.existsByEmail(email)) {
             throw new BusinessException(ErrorCode.UNEXISTING_USER);
         }
 
@@ -56,11 +56,11 @@ public class VerificationService {
         String uid = findPwCodeReq.getUid();
         String email = findPwCodeReq.getEmail();
 
-        if (!userRepository.existsByUid(uid)) {
+        if (!userRepository.existsByEmail(uid)) {
             throw new BusinessException(ErrorCode.UNEXISTING_ID);
         }
 
-        Member member = userRepository.findByUid(uid).get();
+        Member member = userRepository.findByEmail(uid).get();
         if (!email.equals(member.getEmail())) {
             throw new BusinessException(ErrorCode.UNMATCHING_PHONE_NUM);
         }
