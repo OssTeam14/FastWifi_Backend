@@ -14,7 +14,4 @@ public class WifiInfoRes {
     private Integer downloadSpeed;
     private Integer uploadSpeed;
     private LocalDate lastUpdate;
-    private Building building;
-
-
 }
