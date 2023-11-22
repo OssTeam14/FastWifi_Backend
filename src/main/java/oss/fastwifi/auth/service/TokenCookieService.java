@@ -1,5 +1,6 @@
 package oss.fastwifi.auth.service;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -10,8 +11,13 @@ public class TokenCookieService {
     private final static String cookieKey = "accessToken";
 
     public void addCookie(HttpServletResponse response, String value){
-        Cookie cookie = new Cookie(cookieKey,value);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from(cookieKey,value)
+                .path("/")
+                .sameSite("None")
+                .httpOnly(false)
+                .secure(false)
+                .build();
+        response.addHeader("Set-Cookie",cookie.toString());
     }
 
     public void expireCookie(HttpServletResponse response){
