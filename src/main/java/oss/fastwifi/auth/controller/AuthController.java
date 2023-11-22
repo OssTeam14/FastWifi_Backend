@@ -9,9 +9,12 @@ import oss.fastwifi.auth.dto.response.AccessTokenRes;
 import oss.fastwifi.auth.dto.response.FindIdRes;
 import oss.fastwifi.auth.dto.response.TokenRes;
 import oss.fastwifi.auth.service.AuthService;
+import oss.fastwifi.auth.service.TokenCookieService;
 import oss.fastwifi.common.ResponseDto;
 import oss.fastwifi.member.entity.Member;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -20,6 +23,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final AuthService authService;
+    private final TokenCookieService tokenCookieService;
 
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody @Valid SignUpReq signUpReq){
@@ -28,8 +32,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenRes> login(@RequestBody @Valid LoginReq loginReq) {
+    public ResponseEntity<TokenRes> login(@RequestBody @Valid LoginReq loginReq, HttpServletResponse response) {
         TokenRes token = authService.login(loginReq);
+        tokenCookieService.addCookie(response, token.getAccessToken());
         return ResponseDto.ok(token);
     }
 
@@ -46,8 +51,9 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(@AuthenticationPrincipal Member member) {
+    public ResponseEntity<String> logout(@AuthenticationPrincipal Member member, HttpServletResponse response) {
         authService.logout(member.getId());
+        tokenCookieService.expireCookie(response);
         return ResponseDto.ok("로그아웃 성공");
     }
 
