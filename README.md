@@ -24,7 +24,6 @@
 
 ## 🔗관련 링크
 
----
 > Back-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Backend)   
 Front-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Front)   
 Web site : <https://github.com/OssTeam14/FastWifi>
@@ -47,6 +46,43 @@ Web site : <https://github.com/OssTeam14/FastWifi>
 
 ### ✨이메일 인증에 따른 로그인
   * 학교 이메일 인증 시 자동으로 비밀번호 확인 권한 제공
+
+
+## 📃 기술 스택
+
+### 요구사항
+> ![Static Badge](https://img.shields.io/badge/Framework-%23121011?style=for-the-badge&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/2.7.17-515151?style=for-the-badge&style=for-the-badge)   
+![Static Badge](https://img.shields.io/badge/Build-%23121011?style=for-the-badge&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/7.1.1-515151?style=for-the-badge&style=for-the-badge)   
+![Static Badge](https://img.shields.io/badge/Language-%23121011?style=for-the-badge&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/17-515151?style=for-the-badge&style=for-the-badge)   
+![Static Badge](https://img.shields.io/badge/Project%20Encoding-%23121011?style=for-the-badge&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/UTF-8-EA2328?style=for-the-badge&style=for-the-badge)
+>
+### Environment
+
+![Static Badge](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white&style=for-the-badge&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Intellij-000000?style=for-the-badge&logo=intellijidea&logoColor=white&style=for-the-badge&style=for-the-badge)
+
+### DateBase
+![Static Badge](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white&style=for-the-badge)
+
+
+
+### FrameWork
+![Static Badge](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/jWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white&style=for-the-badge)
+
+
+### Infrastructure
+![Static Badge](https://img.shields.io/badge/AWS%20lightSail-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white&style=for-the-badge)
+
 
 ## ⭐ 시작 가이드
 
@@ -256,40 +292,6 @@ echo "> JAR Name: $JAR_NAME"
 $ ./파일명.sh
 ```
 
-## 📃 기술 스택
-
-### 요구사항
-> ![Static Badge](https://img.shields.io/badge/Framework-%23121011?style=for-the-badge&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/2.7.17-515151?style=for-the-badge&style=for-the-badge)   
-![Static Badge](https://img.shields.io/badge/Build-%23121011?style=for-the-badge&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/7.1.1-515151?style=for-the-badge&style=for-the-badge)   
-![Static Badge](https://img.shields.io/badge/Language-%23121011?style=for-the-badge&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/17-515151?style=for-the-badge&style=for-the-badge)   
-![Static Badge](https://img.shields.io/badge/Project%20Encoding-%23121011?style=for-the-badge&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/UTF-8-EA2328?style=for-the-badge&style=for-the-badge)
-> 
-### Environment
-
-![Static Badge](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white&style=for-the-badge&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/Intellij-000000?style=for-the-badge&logo=intellijidea&logoColor=white&style=for-the-badge&style=for-the-badge)
-
-### DateBase
-![Static Badge](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white&style=for-the-badge)   
-
-
-
-### FrameWork
-![Static Badge](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/jWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white&style=for-the-badge)
-
-
-### Infrastructure
-![Static Badge](https://img.shields.io/badge/AWS%20lightSail-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white&style=for-the-badge)
 
 ## ⚙ 시스템 아키텍쳐
 
