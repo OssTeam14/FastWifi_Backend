@@ -2,12 +2,10 @@
 
 ## KwFastWifi Back-end
 
----
 ![Static Badge](https://img.shields.io/badge/verson-1.0.1-blue)   
 
 ## 👥맴버 소개
 
----
 <table>
     <thead>
         <tr>
@@ -24,9 +22,15 @@
     </tbody>
 </table>
 
-## 🔎기능 소개
+## 🔗관련 링크
 
 ---
+> Back-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Backend)   
+Front-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Front)   
+Web site : <https://github.com/OssTeam14/FastWifi>
+
+
+## 🔎기능 소개
 
 ### ✨건물별에 따른 학교 와이파이 리스트 제공
   * 새빛관
@@ -45,8 +49,6 @@
   * 학교 이메일 인증 시 자동으로 비밀번호 확인 권한 제공
 
 ## ⭐ 시작 가이드
-
----
 
 ### 설치 방법
 
@@ -172,9 +174,11 @@ spring:
 #### 학교 메일 인증 설정
 ```java
 public final class Constants {
-    ...
+    ~~~
+    
     public static final String KW_MAIL_REGEXP = "^[A-Za-z0-9._%+-]+@학교 메일 주소$";
-    ...
+    
+    ~~~
 }
 
 ```
@@ -254,7 +258,6 @@ $ ./파일명.sh
 
 ## 📃 기술 스택
 
----
 ### 요구사항
 > ![Static Badge](https://img.shields.io/badge/Framework-%23121011?style=for-the-badge&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white&style=for-the-badge)
@@ -288,10 +291,13 @@ $ ./파일명.sh
 ### Infrastructure
 ![Static Badge](https://img.shields.io/badge/AWS%20lightSail-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white&style=for-the-badge)
 
+## ⚙ 시스템 아키텍쳐
+
+![systmeAricthure.png](systmeAricthure.png)
+
 
 ## 📂 폴더 구조
 
----
 ```
 📂 src
 ┣ 📂 main
@@ -349,18 +355,8 @@ $ ./파일명.sh
 ┣ FastWifiApplication.class
 ```
 
-## ⚙ 시스템 아키텍쳐
-
----
-![systmeAricthure.png](systmeAricthure.png)
 
 
-## 🔗관련 링크
-
----
-> Back-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Backend)   
-Front-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Front)   
-Web site : <https://github.com/OssTeam14/FastWifi>
 
 
 
