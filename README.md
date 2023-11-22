@@ -155,7 +155,7 @@ sudo systemctl restart redis-server.service
 netstat -tnlp | grep [레디스 실행포트]
 ```
 
-### 프로젝트 셋팅
+### 프로젝트 세팅
 
 ---
 
