@@ -10,8 +10,8 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class WifiInfoRes {
-    private String name;
+    private String wifiName;
     private Integer downloadSpeed;
     private Integer uploadSpeed;
-    private LocalDate lastUpdate;
+    private String lastUpdate;
 }
