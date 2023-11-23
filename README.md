@@ -25,7 +25,7 @@
 ## 🔗관련 링크
 
 > Back-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Backend)   
-Front-end: [KwFastWifiBack](https://github.com/OssTeam14/FastWifi_Front)   
+Front-end: [KwFastWifiFront](https://github.com/OssTeam14/FastWifi_Front)   
 Web site : <https://github.com/OssTeam14/FastWifi>
 
 
@@ -155,7 +155,7 @@ sudo systemctl restart redis-server.service
 netstat -tnlp | grep [레디스 실행포트]
 ```
 
-### 프로젝트 셋팅
+### 프로젝트 세팅
 
 ---
 
