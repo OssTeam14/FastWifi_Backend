@@ -30,7 +30,7 @@ public interface WifiMapper {
     }
 
     default Boolean toIsPwd(String pwd) {
-        if(pwd.isBlank()){
+        if(pwd == null || pwd.isEmpty()){
             return false;
         }
 
