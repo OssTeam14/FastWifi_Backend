@@ -46,7 +46,7 @@ public class WifiMapperTest {
         WifiInfoRes resultWithOutPwd = wifiMapper.from(sampleWifi);
 
         //then
-        Assertions.assertThat(resultWithOutPwd.getName()).isEqualTo(sampleWifi.getName());
+        Assertions.assertThat(resultWithOutPwd.getWifiName()).isEqualTo(sampleWifi.getName());
         Assertions.assertThat(resultWithOutPwd.getDownloadSpeed()).isEqualTo(sampleWifi.getDownloadSpeed());
         Assertions.assertThat(resultWithOutPwd.getUploadSpeed()).isEqualTo(sampleWifi.getUploadSpeed());
 
