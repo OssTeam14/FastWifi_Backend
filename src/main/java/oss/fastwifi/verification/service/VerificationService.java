@@ -78,6 +78,9 @@ public class VerificationService {
         VerifyingType verifyingType = verifyReq.getVerifyingType();
         String redisKey = verifyingType + email;
 
+        log.info("redisKey = {}",redisKey);
+        log.info("requestCode = {}",requestCode);
+
         if (!redisService.hasKey(redisKey)) {
             throw new BusinessException(ErrorCode.EXPIRED_VERIFICATION_CODE);
         }
