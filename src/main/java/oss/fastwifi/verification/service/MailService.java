@@ -26,7 +26,7 @@ public class MailService {
 
         String title = "Fast Wifi 인증 번호";
         String text = "Fast Wifi에서 요청한 인증 번호입니다.\n" +
-                "인증 유효 시간 은 " + validTime + "입니다\n"
+                "인증 유효 시간 은 " + validTime + "분 입니다\n"
                 +"유효 시간 내에 인증해주시길 바랍니다.\n" +
                 "인증 번호 : " + verificationCode;
 
