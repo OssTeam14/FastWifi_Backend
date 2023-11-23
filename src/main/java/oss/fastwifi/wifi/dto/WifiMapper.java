@@ -10,6 +10,7 @@ import oss.fastwifi.wifi.dto.response.WifiInfoRes;
 
 @Mapper(componentModel = "spring")
 public interface WifiMapper {
+    @Mapping(source = "name", target = "wifiName")
     WifiInfoRes from(Wifi wifi);
 
     WifiPwdRes toWifiPwdRes(Wifi wifi);
